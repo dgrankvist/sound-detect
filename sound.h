@@ -21,5 +21,5 @@ typedef struct{
 
 // function prototypes
 void displayWAVheader(char filename[]);
+void displayBar(char filename[]);
 void printID(char ID[]);
-

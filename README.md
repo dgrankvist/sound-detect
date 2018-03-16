@@ -1,1 +1,1 @@
-# Sound detection program
+# Sound detection application
