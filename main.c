@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>	// system()
+#include <unistd.h>
 #include "sound.h"
 
 int main(void){

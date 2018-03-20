@@ -1,4 +1,5 @@
 #include "sound.h"
+#include "screen.h"
 #include <stdio.h>
 #include <math.h>
 
@@ -35,7 +36,7 @@ void displayBar(char filename[]){
 #ifdef DEBUG
 		printf("RMS[%d] = %10.4f = %10.4fdB\n", i, rms_80[i], dB);
 #else
-		bar(dB, i);
+		bar(i, dB);
 #endif
 	} // for
 } // function
