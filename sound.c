@@ -25,7 +25,8 @@ void displayBar(char filename[]){
 	// all the samples of 1 sec are read to the array samples[], we need to run
 	// a loop 80 times for 80 bars on the screen, and each iteration of this loop
 	// will calculate a RMS value of 200 samples.
-	clearScreen();
+	
+	// clearScreen();
 	for(i=0; i<80; i++){
 		for(j=0, sum_200=0.0; j<200; j++){
 			sum_200 += samples[j+i*200]*samples[j+i*200];	
@@ -52,6 +53,7 @@ void displayWAVheader(char filename[]){
 	}
 	fread(&myhdr, sizeof(WAVHeader), 1, fp);
 	fclose(fp);
+#ifdef DEBUG	
 	printID(myhdr.chunkID);
 	printf("chunk size: %d\n", myhdr.chunkSize);
 	printID(myhdr.format);
@@ -65,6 +67,24 @@ void displayWAVheader(char filename[]){
 	printf("bits per sample: %d\n", myhdr.bitsPerSample);
 	printID(myhdr.subchunk2ID);
 	printf("subchunk 2 size: %d\n", myhdr.subchunk2Size);
+#else
+	// display at top of screen
+	setColor(BLACK);
+	gotoxy(1, 3);
+	setColor(BGWHITE);
+	printf("%s", filename);
+	gotoxy(1, 15);
+	setColor(BGGREEN);
+	printf("Channels: %d", myhdr.numChannels);
+	gotoxy(1, 30);
+	setColor(BGCYAN);
+	printf("Sample rate: %d Hz", myhdr.sampleRate);
+	gotoxy(1, 55);
+	setColor(BGMAGENTA);
+	printf("Dur: %ds", myhdr.subchunk2Size/myhdr.byteRate);
+	setColor(0);
+
+#endif
 }
 
 void printID(char id[]){
