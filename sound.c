@@ -69,18 +69,17 @@ void displayWAVheader(char filename[]){
 	printf("subchunk 2 size: %d\n", myhdr.subchunk2Size);
 #else
 	// display at top of screen
-	setColor(BLACK);
 	gotoxy(1, 3);
-	setColor(BGWHITE);
+	setColor(WHITE);
 	printf("%s", filename);
 	gotoxy(1, 15);
-	setColor(BGGREEN);
+	setColor(GREEN);
 	printf("Channels: %d", myhdr.numChannels);
 	gotoxy(1, 30);
-	setColor(BGCYAN);
+	setColor(CYAN);
 	printf("Sample rate: %d Hz", myhdr.sampleRate);
 	gotoxy(1, 55);
-	setColor(BGMAGENTA);
+	setColor(MAGENTA);
 	printf("Dur: %ds", myhdr.subchunk2Size/myhdr.byteRate);
 	setColor(0);
 
