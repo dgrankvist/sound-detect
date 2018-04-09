@@ -144,4 +144,25 @@ You should see the bar graph. In addition, the data is saved to a php page detai
 
 Press Ctrl-C to exit the program.
 
+## Manifest
 
+The application contains the following files:
+* comm.c - source code for the function that calculates 8 samples per second to send to a php server
+* comm.h - header file for server communication
+* main.c - the main function source code file
+* makefile - contains compilation instructions for the program. Run "make" to install, "make clean" to remove additional files from the directory, "make archive" to package the files into a tarball.
+* README.md - this README file
+* screen.c - source code for the file that controls output to the terminal window
+* screen.h - header file for the screen control functions
+* sound.c - source code for doing the recording, analyzing the recording and outputing information
+* sound.h - header file for processing the sound recording 
+
+## License
+
+This information will be added later
+
+## Contact information
+
+Daniel Grankvist
+daniel.grankvist@edu.vamk.fi
+http://www.cc.puv.fi/~e1700675/
