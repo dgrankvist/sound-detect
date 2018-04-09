@@ -164,5 +164,7 @@ This information will be added later
 ## Contact information
 
 Daniel Grankvist
+
 daniel.grankvist@edu.vamk.fi
+
 http://www.cc.puv.fi/~e1700675/
