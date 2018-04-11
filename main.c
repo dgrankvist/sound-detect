@@ -22,4 +22,5 @@ int main(void){
 		// send fast dBs to web (php program on www.cc.puv.fi)
 		// break;	// for testing, just run the loop once
 	}
+	return 0;
 }

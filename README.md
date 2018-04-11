@@ -16,6 +16,8 @@ It records one second of audio at 16000Hz sample rate, calculates 80 RMS values 
 
 The application is built for Raspberry Pi 3 running Raspbian. In addition, a USB sound card (for example, C-Media Electronics Audio Adapter) and a microphone is required. Superuser privileges are required to perform some configuration. 
 
+To send the data to a server, the server must run PHP and the file sound.php should be moved there.
+
 ### Set USB sound card as default
 
 The USB sound card must be set as the Raspberry Pi's default audio device, as the on-board sound card doesn't have a microphone interface. 
@@ -130,9 +132,12 @@ Run the following command to clone:
 
 	git clone https://github.com/dgrankvist/sound-detect
 
-Run the following command to install:
+To send data to a server, copy the sound.php file to the server, and specify the URL to the server in the file "comm.h" before compiling. The URL should be given in quotes after "#define URL ".  
+
+Finally, run the following command to compile:
 
 	make
+
 
 ## Operation
 
