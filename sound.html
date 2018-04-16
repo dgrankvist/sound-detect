@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>RPi Sound Sensor visualization</title>
+	<meta charset="UTF-8">
+	<!--<meta http-equiv="Refresh" content="5"> Uncomment this to automatically refresh every 5 seconds-->
+</head>
+
+
+
+<body>
+	<h1>RPi Sound Sensor</h1>
+	<div id="timest"></div>
+	<canvas id="graphCanvas" width="800" height="500" style="border:1px solid black;"></canvas> 
+	<input type="button" value="Refresh" onClick="window.location.reload()">
+	<a href="sound_log.txt">Log file (if software has already been run)</a>
+	<p>&copy; 2018 Daniel Grankvist. Software released under the <a href="https://github.com/dgrankvist/sound-detect/blob/master/LICENSE">MIT License</a>, contents of this page released under  <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode">Creative Commons Attribution-ShareAlike 4.0 International</a> license.</p>
+	<script>
+
+   	var canvas = document.getElementById("graphCanvas");
+	var ctx = canvas.getContext("2d");
+
+	function drawHorizLine(y){
+		ctx.beginPath();
+		ctx.moveTo(0,y);
+		ctx.lineTo(canvas.width, y);
+		ctx.stroke();
+	}
+
+
+	function drawGraph(dbArray){
+		var i, k; // loop counters
+		ctx.font="10px Arial";
+		ctx.fillText("dB", 5, 15);
+		for(k=0;k<(canvas.height/50);k++){
+			drawHorizLine(50*k);
+			ctx.fillText((100-10*k), 5, (50*k)-3);
+		}
+		console.log(dbArray); // array values also passed into javascript console
+		for(i=0;i<8;i++){
+			ctx.beginPath(); // to get different colours depending on volume level, otherwise all bars will be redrawn every time loop runs 
+   			ctx.rect(20+i*100,((canvas.height)-(5*dbArray[i])),80,(5*dbArray[i]));  // draw bar, 1dB corresponds to 5px
+			console.log(dbArray[i]);
+
+			if ((dbArray[i])>=80) {
+				ctx.fillStyle = "#FF0000";
+			}
+			else if ((dbArray[i])>=60) {
+				ctx.fillStyle = "#FFFF00";
+			}
+			else {
+				ctx.fillStyle = "#00FF55";
+			}
+
+			ctx.fill();
+			ctx.stroke();
+		}
+	}
+
+	function cutString(inStr){
+		var j;
+		var volumes;
+		var tmpStr;
+		var volStr;
+		var timestamp;
+		var voldB = new Array;
+		tmpStr = inStr.split("!");
+		timestamp = tmpStr[0];
+		volStr = tmpStr[1];
+		console.log(tmpStr);
+		volStr = volStr.replace(/"/g,""); //remove quotes around the string
+		timestamp = timestamp.replace(/"/g,""); //remove quotes around the string
+		volumes = volStr.split(";"); // split string at semicolon and pass values into array
+	
+		for(j=0;j<8;j++){
+			voldB[j] = Math.round(20*Math.log10(volumes[j])); // calculate decibel value
+		}
+		document.getElementById("timest").innerHTML = "Measurement time: " + timestamp; 
+		drawGraph(voldB)
+	}
+
+	function loadFile(){
+		var xhttp = new XMLHttpRequest();
+		xhttp.open("POST", "levels.txt", false); // "false" (synchronous AJAX request) to prevent the function being run before AJAX request finishes
+		xhttp.send();
+		var outStr = xhttp.responseText;
+		cutString(outStr);
+	}
+
+	loadFile()
+	</script>
+			
+</body>
+
+</html>
