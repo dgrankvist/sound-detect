@@ -161,6 +161,8 @@ The application contains the following files:
 * screen.h - header file for the screen control functions
 * sound.c - source code for doing the recording, analyzing the recording and outputing information
 * sound.h - header file for processing the sound recording 
+* sound.php - handles receiving the data to the server, passes values to sound_log.txt file and the latest value to levels.txt for sound.html to display in web interface
+* sound.html - web interface, uses HTML5 canvas to display the latest sound levels received from the Raspberry Pi.
 
 ## License
 
