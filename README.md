@@ -134,6 +134,8 @@ Run the following command to clone:
 
 To send data to a server, copy the sound.php file to the server, and specify the URL to the server in the file "comm.h" before compiling. The URL should be given in quotes after "#define URL ".  
 
+To display a visualization web interface, copy the file sound.html to the same directory as sound.php on the server.
+
 Finally, run the following command to compile:
 
 	make
