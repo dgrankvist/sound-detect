@@ -12,37 +12,48 @@
 <body>
 	<h1>RPi Sound Sensor</h1>
 	<div id="timest"></div>
-	<canvas id="graphCanvas" width="800" height="500" style="border:1px solid black;"></canvas> 
-	<input type="button" value="Refresh" onClick="window.location.reload()">
-	<a href="sound_log.txt">Log file (if software has already been run)</a>
+	<canvas id="graphCanvas" width="800" height="500" style="border:1px solid black;"></canvas><br>
+	<input type="button" value="Refresh" style="font-size: 14px; font-weight: bold;" onClick="clearCanvas()"><br>
+	<a href="sound_log.txt">Log file (available if the application has already been run)</a><br>
 	<p>&copy; 2018 Daniel Grankvist. Software released under the <a href="https://github.com/dgrankvist/sound-detect/blob/master/LICENSE">MIT License</a>, contents of this page released under  <a href="https://creativecommons.org/licenses/by-sa/4.0/legalcode">Creative Commons Attribution-ShareAlike 4.0 International</a> license.</p>
 	<script>
 
    	var canvas = document.getElementById("graphCanvas");
 	var ctx = canvas.getContext("2d");
 
+	function clearCanvas(){
+		// runs when the refresh button on the page is clicked
+		ctx.clearRect(0 , 0, 800, 500);
+		loadFile();
+	}
+
 	function drawHorizLine(y){
+		// for drawing the marker lines
 		ctx.beginPath();
 		ctx.moveTo(0,y);
 		ctx.lineTo(canvas.width, y);
 		ctx.stroke();
 	}
 
-
 	function drawGraph(dbArray){
 		var i, k; // loop counters
 		ctx.font="10px Arial";
+		ctx.fillStyle = "#000000";
 		ctx.fillText("dB", 5, 15);
-		for(k=0;k<(canvas.height/50);k++){
+		for(k=0;k<(canvas.height/50);k++){ // draw marker lines with labels every 10dB
 			drawHorizLine(50*k);
 			ctx.fillText((100-10*k), 5, (50*k)-3);
 		}
 		console.log(dbArray); // array values also passed into javascript console
 		for(i=0;i<8;i++){
-			ctx.beginPath(); // to get different colours depending on volume level, otherwise all bars will be redrawn every time loop runs 
-   			ctx.rect(20+i*100,((canvas.height)-(5*dbArray[i])),80,(5*dbArray[i]));  // draw bar, 1dB corresponds to 5px
-			console.log(dbArray[i]);
+			ctx.beginPath();
+		   	// to get different colours depending on volume level, otherwise all bars 
+			// will be redrawn every time loop runs and will thus be the color of the last bar 
 
+   			ctx.rect(20+i*100,((canvas.height)-(5*dbArray[i])),80,(5*dbArray[i]));  
+			// draw bar, 1dB corresponds to 5px
+
+			// choose bar color based on volume level
 			if ((dbArray[i])>=80) {
 				ctx.fillStyle = "#FF0000";
 			}
@@ -53,22 +64,22 @@
 				ctx.fillStyle = "#00FF55";
 			}
 
-			ctx.fill();
-			ctx.stroke();
+			ctx.fill(); // fill bar with color
+			ctx.stroke(); // draw bar border
 		}
 	}
 
 	function cutString(inStr){
+		// manipulates the string received through AJAX so its data can be used to display the graph
 		var j;
 		var volumes;
 		var tmpStr;
 		var volStr;
 		var timestamp;
 		var voldB = new Array;
-		tmpStr = inStr.split("!");
+		tmpStr = inStr.split("!"); // array that stores the timestamp as one value and the sound levels as the other
 		timestamp = tmpStr[0];
 		volStr = tmpStr[1];
-		console.log(tmpStr);
 		volStr = volStr.replace(/"/g,""); //remove quotes around the string
 		timestamp = timestamp.replace(/"/g,""); //remove quotes around the string
 		volumes = volStr.split(";"); // split string at semicolon and pass values into array
@@ -76,19 +87,23 @@
 		for(j=0;j<8;j++){
 			voldB[j] = Math.round(20*Math.log10(volumes[j])); // calculate decibel value
 		}
+		// display timestamp on page
 		document.getElementById("timest").innerHTML = "Measurement time: " + timestamp; 
-		drawGraph(voldB)
+		// draw the canvas
+		drawGraph(voldB); // call next function inside this function to pass data on as parameter
 	}
 
 	function loadFile(){
+		// handles getting the information from the levels.txt file created by PHP
 		var xhttp = new XMLHttpRequest();
-		xhttp.open("POST", "levels.txt", false); // "false" (synchronous AJAX request) to prevent the function being run before AJAX request finishes
+		xhttp.open("POST", "levels.txt", false); // "false"=synchronous AJAX request to prevent the canvas being drawn before AJAX request finishes
 		xhttp.send();
 		var outStr = xhttp.responseText;
 		cutString(outStr);
 	}
 
-	loadFile()
+	// run the first function
+	loadFile();
 	</script>
 			
 </body>
