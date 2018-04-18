@@ -9,6 +9,8 @@
 
 /* Function definition of setColor(). Uses VT100 escape sequence "\ESC[1;colorm"
  * where color is given in the enumerated type in screen.h 
+ * Input argument: int color: color, values of the constants defined in screen.h
+ * Output argument: none
  */
 void setColor(int color){
 	printf("%c[1;%dm", ESC, color);

@@ -7,6 +7,13 @@
 // but the function will recalculate 8 pieces of RMS values, each corresponding to 2000 samples
 // or 125ms of sound.
 
+/*
+ * Function definition of sendToServer. Takes array of the 80 original RMS values, calculates
+ * 8 RMS values from these and uses curl to send these to a server defined in comm.h with HTTP
+ * POST request.
+ * Input argument: double r80[]: 80 rms sound values
+ * Output argument: none
+ */
 void sendToServer(double r80[]){
 	double r8[8], sum;
 	int i, j;	// loop counters

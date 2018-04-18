@@ -7,6 +7,7 @@
 // constant definitions
 #define SAMPLERATE 16000
 
+// define the structure of the WAV header file
 typedef struct{
 	char chunkID[4];			// "RIFF"
 	unsigned int chunkSize;		// 4 bytes

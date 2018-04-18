@@ -9,6 +9,8 @@
 // of the file, and the samples should be in S16_LE format, and there are
 // 16000 of them. The function processes every 200 samples and calculates
 // their RMS value and renders this value as a bar on terminal screen.
+// Input argument: char filename[]: String containing the filename given called in main.c
+// Output argument: none
 void displayBar(char filename[]){
 	FILE *fp;
 	short int samples[SAMPLERATE];
@@ -46,7 +48,10 @@ void displayBar(char filename[]){
 #endif
 } // function
 
-// function definition of displayWAVheader()
+// function definition of displayWAVheader(). Displays wavefile header information on screen
+// (hidden unless conditional compitiling with DEBUG is used).
+// Input argument: char filename[]: String containing the filename given called in main.c
+// Output argument: none
 void displayWAVheader(char filename[]){
 	WAVHeader myhdr;			// an instance of defined struct
 	FILE *fp;
@@ -90,6 +95,10 @@ void displayWAVheader(char filename[]){
 #endif
 }
 
+// function definition of printID(). Prints text information from
+// the wave header to display in the header information.
+// Input argument: char id[]: string containing the header field name
+// Output argument: none
 void printID(char id[]){
 	int i;
 	for(i=0; i<4; i++)
