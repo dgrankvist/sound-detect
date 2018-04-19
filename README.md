@@ -3,6 +3,8 @@
 This application is created as a course project for the Application Development course at Vaasa University of Applied Sciences (VAMK).
 It is meant to collect the sound level in the proximity of the Raspberry Pi.
 It records one second of audio at 16000Hz sample rate, calculates 80 RMS values for the sound level, and outputs them as a bar graph to the terminal window.
+The application can also transfer the data, at a rate of 8 RMS values per 
+second, to a server running PHP.
 
 ## Table of Contents
 1. Configuration
