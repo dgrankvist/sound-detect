@@ -121,6 +121,8 @@ If either of these directories contain files, libcurl should already be installe
 	sudo apt-get install libcurl3
 	sudo apt-get install libcurl4-openssl-dev
 
+For best performance, terminal encoding should be set to UTF-8/Unicode.
+
 ### Install git
 
 Run the following command to install git if it is not already installed:
